@@ -1,8 +1,8 @@
 -- [[ CONFIGURATION ]]
 local FirebaseURL = "https://xyphos-project-default-rtdb.europe-west1.firebasedatabase.app/Keys"
-local PastebinRaw = "https://pastebin.com/raw/vH8SvF1r" -- Ton nouveau lien
+local PastebinRaw = "https://pastebin.com/raw/vH8SvF1r" -- Ton lien Pastebin
 
--- [[ INTERFACE DE LOGIN ]]
+-- [[ INTERFACE ]]
 local ScreenGui = Instance.new("ScreenGui", game:GetService("CoreGui"))
 ScreenGui.Name = "XyphosAuth"
 
@@ -10,8 +10,7 @@ local Main = Instance.new("Frame", ScreenGui)
 Main.Size = UDim2.new(0, 320, 0, 160)
 Main.Position = UDim2.new(0.5, -160, 0.5, -80)
 Main.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
-Main.BorderSizePixel = 0
-Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 8) -- CORRIGÉ (pas de Tool.new)
+Instance.new("UICorner", Main).CornerRadius = UDim.new(0, 8) -- CORRIGÉ ICI
 
 local TextBox = Instance.new("TextBox", Main)
 TextBox.Size = UDim2.new(0.8, 0, 0, 35)
@@ -32,8 +31,8 @@ Instance.new("UICorner", VerifyBtn)
 -- [[ LOGIQUE ]]
 VerifyBtn.MouseButton1Click:Connect(function()
     local key = TextBox.Text:gsub("%s+", "")
-    
-    -- Vérification Firebase
+    VerifyBtn.Text = "VÉRIFICATION..."
+
     local success, response = pcall(function()
         return game:HttpGet(FirebaseURL .. "/" .. key .. ".json")
     end)
@@ -44,10 +43,12 @@ VerifyBtn.MouseButton1Click:Connect(function()
         task.wait(1)
         ScreenGui:Destroy()
         
-        -- Chargement du script depuis ton Pastebin
+        -- On lance ton code qui est sur Pastebin
         loadstring(game:HttpGet(PastebinRaw))()
     else
         VerifyBtn.Text = "CLÉ INVALIDE"
         VerifyBtn.BackgroundColor3 = Color3.fromRGB(200, 80, 80)
+        task.wait(1.5)
+        VerifyBtn.Text = "VÉRIFIER"
     end
 end)
