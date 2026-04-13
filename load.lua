@@ -16,7 +16,7 @@ Main.BorderSizePixel = 0
 Main.Active = true
 Main.Draggable = true
 
--- CORRECTION : Utilisation de UDim.new (L'erreur Tool.new est supprimée)
+-- Correction : Utilisation de UDim.new (L'erreur Tool.new est supprimée)
 local UICorner = Instance.new("UICorner", Main)
 UICorner.CornerRadius = UDim.new(0, 8)
 
@@ -60,7 +60,7 @@ VerifyBtn.MouseButton1Click:Connect(function()
 
     VerifyBtn.Text = "VÉRIFICATION..."
 
-    -- Vérification sur Firebase
+    -- Requête à Firebase
     local success, response = pcall(function()
         return game:HttpGet(FirebaseURL .. "/" .. key .. ".json")
     end)
